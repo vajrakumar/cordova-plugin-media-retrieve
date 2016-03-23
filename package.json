@@ -1,6 +1,6 @@
 {
     "name": "cordova-plugin-media-retrieve",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Cordova ContentProvider Plugin, get meida file list from storage",
     "engines": [{
         "name": "cordova-android",

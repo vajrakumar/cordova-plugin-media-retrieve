@@ -2,11 +2,10 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:rim="http://www.blackberry.com/ns/widgets"
     id="cordova-plugin-media-retrieve"
-    version="0.1.0">
+    version="0.2.0">
     <name>MediaRetrieve</name>
-    <description>Cordova Meida Retrieve Plugin</description>
+    <description>Cordova Media Retrieve Plugin</description>
     <license>MIT License</license>
     <keywords>cordova,media,retrieve,image,audio,video</keywords>
     <repo>https://github.com/Luckyqiao/cordova-plugin-media-retrieve.git</repo>
@@ -19,14 +18,14 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MediaRetrieve">
-                <param name="android-package" value="org.apache.cordova.media.MediaRetrieve"/>
+                <param name="android-package" value="xyz.luckyqiao.cordova.MediaRetrieve"/>
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </config-file>
 
-        <source-file src="src/android/MediaRetrieve.java" target-dir="src/org/apache/cordova/media" />
+        <source-file src="src/android/MediaRetrieve.java" target-dir="src/xyz/luckyqiao/cordova" />
 
      </platform>
 

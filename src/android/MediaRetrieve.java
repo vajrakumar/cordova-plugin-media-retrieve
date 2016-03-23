@@ -1,6 +1,4 @@
-package org.apache.cordova.media;
-
-import java.util.ArrayList;
+package xyz.luckyqiao.cordova;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -8,49 +6,49 @@ import android.provider.MediaStore;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaResourceApi;
-import org.apache.cordova.LOG;
-import org.apache.cordova.PluginResult;
+
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.json.JSONException;
 
-/**
- * This class launches the camera view, allows the user to take a picture, closes the camera view,
- * and returns the captured image.  When the camera view is closed, the screen displayed before
- * the camera view was shown is redisplayed.
- */
 
-public class MediaRetrieve extends CordovaPlugin{
+public class MediaRetrieve extends CordovaPlugin {
 
-       /**
-     * Executes the request and returns PluginResult.
-     *
-     * @param action            The action to execute.
-     * @param args              JSONArry of arguments for the plugin.
-     * @param callbackContext   The callback id used when calling back into JavaScript.
-     * @return                  A PluginResult object with a status and message.
-     */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
- // 扫描外部设备中的照片
-                String str[] = {MediaStore.Images.Media._ID,
-                        MediaStore.Images.Media.DISPLAY_NAME,
-                        MediaStore.Images.Media.DATA};
-                Cursor cursor = cordova.getActivity().getContentResolver().query(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, str,
-                        null, null, null);
-                if (cursor != null) {
-                    String result = "{";
-                    while (cursor.moveToNext()) {
-                        String uid = cursor.getString(0); // 图片ID
-                        String name = cursor.getString(1); // 图片文件名
-                        String uri = Uri.parse("file://" + cursor.getString(2)).toString(); // 图片绝对路径
-                        result = result + "[\"uid\":\"" + uid + "\",\"name\":\"" + name + "\",\"uri\":\"" + uri + "\"],";
-                    }
-                    cursor.close();
-                    result = result + "}";
-                    callbackContext.success(result);
-                }
-                return true;
-    }
 
+        JSONArray jsonRes=new JSONArray();
+        Cursor cursor=null;
+        if(action.equals("image")) {
+            String str[] = {
+                    MediaStore.Images.Media.DISPLAY_NAME,
+                    MediaStore.Images.Media.DATA};
+             cursor = cordova.getActivity().getContentResolver().query(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, str,
+                    null, null, null);
+        }
+        else if(action.equals("audio")){
+            String str[] = {
+                    MediaStore.Audio.Media.DISPLAY_NAME,
+                    MediaStore.Audio.Media.DATA};
+            cursor = cordova.getActivity().getContentResolver().query(
+                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, str,
+                    null, null, null);
+        }
+        if (cursor != null) {
+
+            while (cursor.moveToNext()) {
+                JSONObject objJSON=new JSONObject();
+
+                String name = cursor.getString(0); // 图片ID
+                String uri = Uri.parse("file://" + cursor.getString(1)).toString(); // 图片绝对路径
+
+                objJSON.put(name,uri);
+                jsonRes.put(objJSON);
+
+            }
+            cursor.close();
+            callbackContext.success(jsonRes);
+        }
+        return true;
+    }
 }
