@@ -1,4 +1,4 @@
-package xyz.luckyqiao.cordova;
+package com.luckyqiao.cordova;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,15 +14,26 @@ import org.json.JSONException;
 
 public class MediaRetrieve extends CordovaPlugin {
 
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
+    public boolean execute(final String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+
+       cordova.getThreadPool().execute(new Runnable() {
+           @Override
+           public void run() {
+               runQuery(action,callbackContext);
+           }
+       });
+        return true;
+    }
+
+    private void runQuery(String action, CallbackContext callback){
         JSONArray jsonRes=new JSONArray();
         Cursor cursor=null;
         if(action.equals("image")) {
             String str[] = {
                     MediaStore.Images.Media.DISPLAY_NAME,
                     MediaStore.Images.Media.DATA};
-             cursor = cordova.getActivity().getContentResolver().query(
+            cursor = cordova.getActivity().getContentResolver().query(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, str,
                     null, null, null);
         }
@@ -33,22 +44,33 @@ public class MediaRetrieve extends CordovaPlugin {
             cursor = cordova.getActivity().getContentResolver().query(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, str,
                     null, null, null);
+        }else if(action.equals("video")){
+            String str[] = {
+                    MediaStore.Video.Media.DISPLAY_NAME,
+                    MediaStore.Video.Media.DATA};
+            cursor = cordova.getActivity().getContentResolver().query(
+                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI, str,
+                    null, null, null);
         }
         if (cursor != null) {
 
             while (cursor.moveToNext()) {
                 JSONObject objJSON=new JSONObject();
 
-                String name = cursor.getString(0); // 图片ID
-                String uri = Uri.parse("file://" + cursor.getString(1)).toString(); // 图片绝对路径
+                String name = cursor.getString(0);
+                String uri = Uri.parse("file://" + cursor.getString(1)).toString();
 
-                objJSON.put(name,uri);
+                try{
+                    objJSON.put("name", name);
+                    objJSON.put("url", uri);
+                }catch (JSONException e){
+                    System.out.println(e.getMessage());
+                }
                 jsonRes.put(objJSON);
 
             }
             cursor.close();
-            callbackContext.success(jsonRes);
+            callback.success(jsonRes);
         }
-        return true;
     }
 }

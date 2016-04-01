@@ -1,6 +1,6 @@
 {
     "name": "cordova-plugin-media-retrieve",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Cordova ContentProvider Plugin, get meida file list from storage",
     "engines": [{
         "name": "cordova-android",
@@ -14,14 +14,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/apache/cordova-plugin-camera"
+        "url": "https://github.com/Luckyqiao/cordova-plugin-media-retrieve.git"
     },
     "keywords": [
         "cordova",
         "meida",
         "ContentProvider",
         "ecosystem:cordova",
-        "cordova-android",
+        "cordova-android"
     ],
     "scripts": {},
     "author": "Luckyqiao",
