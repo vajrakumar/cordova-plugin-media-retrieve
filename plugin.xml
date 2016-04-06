@@ -11,7 +11,7 @@
     <repo>https://github.com/Luckyqiao/cordova-plugin-media-retrieve.git</repo>
 
     <js-module src="www/MediaRetrieve.js" name="MediaRetrieve">
-        <runs />
+        <clobbers target="MediaRetrieve" />
     </js-module>
 
     <!-- android -->

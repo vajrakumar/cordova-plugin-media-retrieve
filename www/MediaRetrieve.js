@@ -1,45 +1,15 @@
 var cordova = require('cordova');
 
-(function() {
-
-    function updateImageList() {
-        var onSuccess = function(data) {
-        	console.log(data);
-        }
-
-        var onError = function(e) {
-            console.log(e);
-        }
-
-        cordova.exec(onSuccess, onError, 'MediaRetrieve', 'image', []);
+var MediaRetrieve = {
+    getImageList : function(successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, 'MediaRetrieve', 'image', []);
+    },
+    getAudioList : function(successCallback, errorCallback){
+        cordova.exec(successCallback, errorCallback, 'MediaRetrieve', 'audio', []);
+    },
+    getVideoList : function(successCallback, errorCallback){
+        cordova.exec(successCallback, errorCallback, 'MediaRetrieve', 'video', []);
     }
+};
 
-    function updateAudioList() {
-        var onSuccess = function(data) {
-        	console.log(data)
-        }
-
-        var onError = function(e) {
-            console.log(e);
-        }
-
-        cordova.exec(onSuccess, onError, 'MediaRetrieve', 'audio', []);
-    }
-
-    function updateVideoList() {
-        var onSuccess = function(data) {
-        	console.log(data);
-        }
-
-        var onError = function(e) {
-            console.log(e);
-        }
-
-        cordova.exec(onSuccess, onError, 'MediaRetrieve', 'video', []);
-    }
-
-    updateImageList();
-    updateAudioList();
-    updateVideoList();
-
-})();
+module.exports = MediaRetrieve; 
