@@ -27,7 +27,8 @@ public class MediaRetrieve extends CordovaPlugin {
     }
 
     private void runQuery(String action, CallbackContext callback){
-        JSONArray jsonRes=new JSONArray();
+        JSONObject data=new JSONObject();
+        JSONArray resArray=new JSONArray();
         Cursor cursor=null;
         String baseUri="";
         if(action.equals("image")) {
@@ -62,7 +63,7 @@ public class MediaRetrieve extends CordovaPlugin {
         if (cursor != null) {
 
             while (cursor.moveToNext()) {
-                JSONObject objJSON=new JSONObject();
+                JSONObject item=new JSONObject();
 
                 String id = cursor.getString(0);
                 String name = cursor.getString(1);
@@ -71,17 +72,27 @@ public class MediaRetrieve extends CordovaPlugin {
                 Uri uri=Uri.parse(baseUri+id);
 
                 try{
-                    objJSON.put("name", name);
-                    objJSON.put("uri", uri);
-                    objJSON.put("path", path);
+                    item.put("name", name);
+                    item.put("uri", uri);
+                    item.put("path", path);
                 }catch (JSONException e){
                     System.out.println(e.getMessage());
+                    callback.error(e.getMessage());
+                    return;
                 }
-                jsonRes.put(objJSON);
+                resArray.put(item);
 
             }
             cursor.close();
-            callback.success(jsonRes);
+            try {
+                data.put("data",resArray);
+            }catch (JSONException e){
+                System.out.println(e.getMessage());
+                callback.error(e.getMessage());
+                return;
+            }
+
+            callback.success(data);
         }
     }
 }
