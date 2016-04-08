@@ -1,4 +1,4 @@
-###cordova-plugin-media-retrieve
+### cordova-plugin-media-retrieve
 
 1. Get image list from storage<br>
 `MediaRetrieve.getImageList(onSuccessCallback,onErrorCallBack)`
@@ -9,7 +9,7 @@
 3. Get video list from storage<br>
 `MediaRetrieve.getVideoList(onSuccessCallBack,onErrorCallBack)`
 
-####return
+#### return
 ```
 {
     [
