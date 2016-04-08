@@ -1,10 +1,10 @@
 ###cordova-plugin-media-retrieve
 
-1. Get image list from storage
- `MediaRetrieve.getImageList(onSuccessCallback,onErrorCallBack)`
+1. Get image list from storage<br>
+`MediaRetrieve.getImageList(onSuccessCallback,onErrorCallBack)`
 
-2. Get audio list from storage
+2. Get audio list from storage<br>
  `MediaRetrieve.getAudioList(onSuccessCallBack,onErrorCallBack)`
 
-3. Get video list from storage
+3. Get video list from storage<br>
 `MediaRetrieve.getVideoList(onSuccessCallBack,onErrorCallBack)`
