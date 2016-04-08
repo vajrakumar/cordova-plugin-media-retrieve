@@ -8,3 +8,14 @@
 
 3. Get video list from storage<br>
 `MediaRetrieve.getVideoList(onSuccessCallBack,onErrorCallBack)`
+
+####return
+```
+{
+    [
+        "name":"display name",
+        "uri":"content uri",
+        "path":"absolute path"
+    ]
+}
+```
