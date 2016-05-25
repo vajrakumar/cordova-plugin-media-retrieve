@@ -1,5 +1,6 @@
 package com.luckyqiao.cordova;
 
+
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -43,9 +44,25 @@ public class MediaRetrieve extends CordovaPlugin {
         }
         else if(action.equals("audio")){
             String str[] = {
-                    MediaStore.Audio.Media._ID,
-                    MediaStore.Audio.Media.DISPLAY_NAME,
-                    MediaStore.Audio.Media.DATA};
+                                MediaStore.Audio.Media._ID,
+                                MediaStore.Audio.Media.DISPLAY_NAME,
+                                MediaStore.Audio.Media.DATA,
+                                MediaStore.Audio.Media.ALBUM,
+                                MediaStore.Audio.Media.ALBUM_KEY,
+                                MediaStore.Audio.Media.ARTIST,
+                                MediaStore.Audio.Media.ARTIST_KEY,
+                                MediaStore.Audio.Media.BOOKMARK,
+                                MediaStore.Audio.Media.COMPOSER,
+                                MediaStore.Audio.Media.DATE_ADDED,
+                                MediaStore.Audio.Media.DURATION,
+                                MediaStore.Audio.Media.IS_ALARM,
+                                MediaStore.Audio.Media.IS_MUSIC,
+                                MediaStore.Audio.Media.IS_NOTIFICATION,
+                                MediaStore.Audio.Media.IS_PODCAST,
+                                MediaStore.Audio.Media.IS_RINGTONE,
+                                MediaStore.Audio.Media.TRACK,
+                                MediaStore.Audio.Media.ALBUM_ID
+                        };
             cursor = cordova.getActivity().getContentResolver().query(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, str,
                     null, null, null);
@@ -68,13 +85,45 @@ public class MediaRetrieve extends CordovaPlugin {
                 String id = cursor.getString(0);
                 String name = cursor.getString(1);
                 String path = cursor.getString(2);
+                String album = cursor.getString(3);
+                String albumKey = cursor.getString(4);
+                String artist = cursor.getString(5);
+                String artistKey = cursor.getString(6);
+                String bookmark = cursor.getString(7);
+                String composer = cursor.getString(8);
+                String dateAdded = cursor.getString(9);
+                String Duration = cursor.getString(10);
+                String isAlarm = cursor.getString(11);
+                String isMusic = cursor.getString(12);
+                String isNotification = cursor.getString(13);
+                String isProdcast = cursor.getString(14);
+                String isRingtone = cursor.getString(15);
+                String track = cursor.getString(16);
+                String albumId = cursor.getString(17);
 
                 Uri uri=Uri.parse(baseUri+id);
 
                 try{
+                    item.put("id", id);
                     item.put("name", name);
                     item.put("uri", uri);
-                    item.put("path", path);
+                    item.put("path", "file://" +path);
+                    item.put("album", album);
+                    item.put("albumKey", albumKey);
+                    item.put("artist", artist);
+                    item.put("artistKey", artistKey);
+                    item.put("bookmark", bookmark);
+                    item.put("composer", composer);
+                    item.put("dateAdded", dateAdded);
+                    item.put("Duration", Duration);
+                    item.put("isAlarm", isAlarm);
+                    item.put("isMusic", isMusic);
+                    item.put("isNotification", isNotification);
+                    item.put("isProdcast", isProdcast);
+                    item.put("isRingtone", isRingtone);
+                    item.put("track", track);
+                    item.put("albumId", albumId);
+
                 }catch (JSONException e){
                     System.out.println(e.getMessage());
                     callback.error(e.getMessage());
